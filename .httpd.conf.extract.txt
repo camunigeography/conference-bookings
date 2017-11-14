@@ -1,0 +1,23 @@
+# Apache httpd.conf extract providing URL routing and other directives
+
+#   Example usage in httpd.conf:
+#   
+#   # Conference bookings system
+#   Include /path/to/conference-bookings/.httpd.conf.extract.txt
+#   Use MacroConferenceBookings "/bookings" "/path/to/conference-bookings/:/path/to/php/libraries/"
+
+
+<Macro MacroConferenceBookings $applicationBaseUrl $includePath>
+	
+	<Location $applicationBaseUrl>
+		php_value include_path "$includePath"
+	</Location>
+	
+	Use MacroFrontControllerApplication "$applicationBaseUrl/" "Conference bookings"
+	
+	# Editing
+	Use MacroSinenomineEmbeddedWholeDb "$applicationBaseUrl" "/data" "editing"
+	
+	# Application directives
+	
+</Macro>

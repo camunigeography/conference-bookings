@@ -1,0 +1,14 @@
+<?php
+
+# Settings
+$settings = array (
+	'hostname' => 'localhost',
+	'username' => 'the_username',
+	'password' => 'the_password',
+);
+
+# Load and run the conference bookings class
+require_once ('conference-bookings/conferenceBookings.php');
+new conferenceBookings.php ($settings);
+
+?>
