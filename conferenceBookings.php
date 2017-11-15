@@ -21,7 +21,7 @@ class conferenceBookings extends frontControllerApplication
 			'useSettings' => true,
 			'internalAuth' => true,
 			'authentication' => true,	// All pages require login
-			'settingsTableExplodeTextarea' => true,
+			'settingsTableExplodeTextarea' => array ('sessions', 'projects'),
 		);
 		
 		# Return the defaults
@@ -89,6 +89,10 @@ class conferenceBookings extends frontControllerApplication
 			CREATE TABLE `settings` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
 			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
+			  `conferenceIntroduction` TEXT COMMENT 'Conference page introduction',
+			  `presentationsIntroduction` TEXT COMMENT 'Presentations page introduction',
+			  `fieldweekIntroduction` TEXT COMMENT 'Fieldweek page introduction',
+			  `vendorIntroduction` TEXT COMMENT 'Vendor page introduction',
 			  `sessions` TEXT NOT NULL COMMENT 'Sessions',
 			  `projects` TEXT NOT NULL COMMENT 'Projects'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
@@ -251,6 +255,11 @@ class conferenceBookings extends frontControllerApplication
 			'picker' => true,
 			'cols' => 70,
 		));
+		if ($this->settings["{$action}Introduction"]) {
+			$introductionHtml = application::formatTextBlock ($this->settings["{$action}Introduction"]);
+			$introductionHtml = "\n<div class=\"graybox\">" . $introductionHtml . "\n</div>";
+			$form->heading ('', $introductionHtml);
+		}
 		$form->dataBinding (array (
 			'database' => $this->settings['database'],
 			'table' => $action,
