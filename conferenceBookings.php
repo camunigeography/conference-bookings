@@ -88,7 +88,7 @@ class conferenceBookings extends frontControllerApplication
 			
 			CREATE TABLE `settings` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
-			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
+			  `feedbackRecipient` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
 			  `conferenceIntroduction` TEXT COMMENT 'Conference page introduction',
 			  `presentationsIntroduction` TEXT COMMENT 'Presentations page introduction',
 			  `fieldweekIntroduction` TEXT COMMENT 'Fieldweek page introduction',
