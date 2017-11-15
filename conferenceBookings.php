@@ -193,6 +193,8 @@ class conferenceBookings extends frontControllerApplication
 	# Additional initialisation
 	public function main ()
 	{
+		# Set internal fields
+		$this->internalFields = array ('id', 'status', 'review', 'userId', 'createdAt');
 		
 	}
 	
@@ -271,6 +273,18 @@ class conferenceBookings extends frontControllerApplication
 			$table = $forceTable;
 		}
 		
+		# Show the user's submission if they have already made one
+		if ($submission = $this->getSubmissionOfUser ($this->user, $table, $headings /* returned by reference */)) {
+			
+			# Show the submission
+			$html  = "\n<p>You have submitted the following details:</p>";
+			$html .= application::htmlTableKeyed ($submission, $headings);
+			$html .= "\n<p class=\"comment\">Please contact us via the <a href=\"{$this->baseUrl}/feedback.html\">feedback page</a> if any of these details are incorrect.</p>";
+			
+			# Return the HTML
+			return $html;
+		}
+		
 		# Get the dataBinding attributes for each table
 		$dataBindingAttributesByAction = $this->formDataBindingAttributes ();
 		
@@ -297,7 +311,7 @@ class conferenceBookings extends frontControllerApplication
 			'database' => $this->settings['database'],
 			'table' => $table,
 			'intelligence' => true,
-			'exclude' => array ('status', 'review', 'userId'),
+			'exclude' => $this->internalFields,
 			'attributes' => $dataBindingAttributesByAction[$action],
 		));
 		
@@ -321,6 +335,25 @@ class conferenceBookings extends frontControllerApplication
 		
 		# Return the HTML
 		return $html;
+	}
+	
+	
+	# Function to get the submission of a user
+	private function getSubmissionOfUser ($userId, $table, &$headings = array ())
+	{
+		# Get the data
+		$data = $this->databaseConnection->selectOne ($this->settings['database'], $table, array ('userId' => $this->user));
+		
+		# Exclude internal fields
+		foreach ($this->internalFields as $field) {
+			unset ($data[$field]);
+		}
+		
+		# Obtain headings
+		$headings = $this->databaseConnection->getHeadings ($this->settings['database'], $table);
+		
+		# Return the data
+		return $data;
 	}
 	
 	
