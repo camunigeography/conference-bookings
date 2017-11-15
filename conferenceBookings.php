@@ -124,6 +124,7 @@ class conferenceBookings extends frontControllerApplication
 			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
 			  `participantType` enum('Presenter','Participant (non-student)','Student participant','Vendor representative') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Registering as',
 			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
 			
@@ -146,6 +147,7 @@ class conferenceBookings extends frontControllerApplication
 			  `dietaryRequirements` enum('Vegetarian','Vegan','Gluten-free','Other:') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Dietary requirements',
 			  `dietaryDetails` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Other (dietary request)',
 			  `medical` text COLLATE utf8_unicode_ci COMMENT 'Physical/medical concerns',
+			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
 			
@@ -160,6 +162,7 @@ class conferenceBookings extends frontControllerApplication
 			  `abstract` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Abstract',
 			  `status` ENUM('Submitted','In review','Accepted','Rejected') NOT NULL DEFAULT 'Submitted' COMMENT 'Status',
 			  `review` TEXT NULL COMMENT 'Reviewer comments',
+			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Presentation (oral/poster) applications';
 			
@@ -174,6 +177,7 @@ class conferenceBookings extends frontControllerApplication
 			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
 			  `website` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Company website',
 			  `description` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Vendor description',
+			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
 			
@@ -293,7 +297,7 @@ class conferenceBookings extends frontControllerApplication
 			'database' => $this->settings['database'],
 			'table' => $table,
 			'intelligence' => true,
-			'exclude' => array ('status', 'review'),
+			'exclude' => array ('status', 'review', 'userId'),
 			'attributes' => $dataBindingAttributesByAction[$action],
 		));
 		
@@ -304,6 +308,9 @@ class conferenceBookings extends frontControllerApplication
 		
 		# Process the form
 		if ($result = $form->process ($html)) {
+			
+			# Inject the user ID
+			$result['userId'] = $this->user;
 			
 			# Insert into the database
 			if (!$this->databaseConnection->insert ($this->settings['database'], $table, $result)) {
