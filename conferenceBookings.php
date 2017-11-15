@@ -316,6 +316,11 @@ class conferenceBookings extends frontControllerApplication
 			'attributes' => $dataBindingAttributesByAction[$action],
 		));
 		
+		# For the projects, enforce uniqueness
+		if ($table == 'fieldweek') {
+			$form->validation ('different', array ('project1', 'project2', 'project3', 'project4', 'project5'));
+		}
+		
 		# Set output to e-mail, confirmation e-mail, and screen
 		$form->setOutputEmail ($this->settings['feedbackRecipient'], $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}");
 		$form->setOutputConfirmationEmail ('email', $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}", $includeAbuseNotice = false);
