@@ -351,8 +351,13 @@ class conferenceBookings extends frontControllerApplication
 		);
 		
 		# Define table attributes
-		$attributes = array (
-		);
+		$attributesByTable = $this->formDataBindingAttributes ($table);
+		$attributes = array ();
+		foreach ($attributesByTable as $table => $attributesForTable) {
+			foreach ($attributesForTable as $field => $fieldAttributes) {
+				$attributes[] = array ($this->settings['database'], $table, $field, $fieldAttributes);
+			}
+		}
 		
 		# Define tables to deny editing for
 		$deny[$this->settings['database']] = array (
