@@ -162,8 +162,9 @@ class conferenceBookings extends frontControllerApplication
 			  `abstract` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Abstract',
 			  `status` ENUM('Submitted','In review','Accepted','Rejected') NOT NULL DEFAULT 'Submitted' COMMENT 'Status',
 			  `review` TEXT NULL COMMENT 'Reviewer comments',
-			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
-			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
+			  `userId` INT(11) NOT NULL COMMENT 'User ID',
+			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp',
+			  UNIQUE `typeUserId` (`type`, `userId`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Presentation (oral/poster) applications';
 			
 			CREATE TABLE `vendor` (
