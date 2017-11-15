@@ -189,7 +189,7 @@ class conferenceBookings extends frontControllerApplication
 	public function home ()
 	{
 		# Start the HTML
-		$html = "\n<p>Welcome to the conference booking system.</p>";
+		$html = "\n<p><strong>Welcome to the conference booking system.</strong></p>";
 		
 		# Create a list of forms
 		$list = array ();
@@ -198,6 +198,7 @@ class conferenceBookings extends frontControllerApplication
 				$list[$actionId] = "<a href=\"{$this->baseUrl}/{$actionId}/\">" . htmlspecialchars ($action['description']) . '</a>';
 			}
 		}
+		$html .= "\n<p>Please select the relevant form:</p>";
 		$html .= application::htmlUl ($list, 0, 'boxylist');
 		
 		# Show the HTML
