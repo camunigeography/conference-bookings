@@ -89,7 +89,8 @@ class conferenceBookings extends frontControllerApplication
 			CREATE TABLE `settings` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
 			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
-			  `sessions` TEXT NOT NULL COMMENT 'Sessions'
+			  `sessions` TEXT NOT NULL COMMENT 'Sessions',
+			  `projects` TEXT NOT NULL COMMENT 'Projects'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `users` (
@@ -297,6 +298,11 @@ class conferenceBookings extends frontControllerApplication
 				'country' => array ('type' => 'select', 'values' => $countries, ),
 				'position' => array ('type' => 'radiobuttons', ),
 				'membership' => array ('type' => 'radiobuttons', ),
+				'project1' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
+				'project2' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
+				'project3' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
+				'project4' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
+				'project5' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
 				'dietaryRequirements' => array ('type' => 'radiobuttons', ),
 			),
 			
