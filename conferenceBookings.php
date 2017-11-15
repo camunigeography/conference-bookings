@@ -244,6 +244,9 @@ class conferenceBookings extends frontControllerApplication
 		# Start the HTML
 		$html = '';
 		
+		# Get the dataBinding attributes for each table
+		$dataBindingAttributesByTable = $this->formDataBindingAttributes ($action);
+		
 		# Create a new form
 		$form = new form (array (
 			'div' => 'ultimateform horizontalonly',
@@ -265,7 +268,7 @@ class conferenceBookings extends frontControllerApplication
 			'database' => $this->settings['database'],
 			'table' => $action,
 			'intelligence' => true,
-			'attributes' => $this->formDataBindingAttributes ($action),
+			'attributes' => $dataBindingAttributesByTable[$action],
 		));
 		$form->setOutputEmail ($this->settings['feedbackRecipient'], $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}");
 		$form->setOutputScreen ();
@@ -284,7 +287,7 @@ class conferenceBookings extends frontControllerApplication
 	
 	
 	# Helper function to define the dataBinding attributes
-	private function formDataBindingAttributes ($table)
+	private function formDataBindingAttributes ()
 	{
 		# Get the countries
 		$countries = $this->getCountries ();
@@ -330,7 +333,7 @@ class conferenceBookings extends frontControllerApplication
 		);
 		
 		# Return the properties
-		return $dataBindingAttributes[$table];
+		return $dataBindingAttributes;
 	}
 	
 	
