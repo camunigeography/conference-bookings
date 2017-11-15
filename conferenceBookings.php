@@ -275,7 +275,7 @@ class conferenceBookings extends frontControllerApplication
 		}
 		
 		# Show the user's submission if they have already made one
-		if ($submission = $this->getSubmissionOfUser ($this->user, $table, $headings /* returned by reference */)) {
+		if ($submission = $this->getSubmissionOfUser ($this->user, $table, $action, $headings /* returned by reference */)) {
 			
 			# Show the submission
 			$html  = "\n<p>You have submitted the following details:</p>";
@@ -340,10 +340,22 @@ class conferenceBookings extends frontControllerApplication
 	
 	
 	# Function to get the submission of a user
-	private function getSubmissionOfUser ($userId, $table, &$headings = array ())
+	private function getSubmissionOfUser ($userId, $table, $action, &$headings = array ())
 	{
+		# Set constraints
+		$constraints = array ('userId' => $this->user);
+		
+		# For the hybrid presentations/poster table, set additional constraint
+		if ($table == 'presentations') {
+			$typeConstraints = array (
+				'presentations'	=> 'Oral',
+				'posters'		=> 'Poster',
+			);
+			$constraints['type'] = $typeConstraints[$action];
+		}
+		
 		# Get the data
-		$data = $this->databaseConnection->selectOne ($this->settings['database'], $table, array ('userId' => $this->user));
+		$data = $this->databaseConnection->selectOne ($this->settings['database'], $table, $constraints);
 		
 		# Exclude internal fields
 		foreach ($this->internalFields as $field) {
