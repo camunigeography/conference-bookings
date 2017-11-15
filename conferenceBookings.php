@@ -346,7 +346,9 @@ class conferenceBookings extends frontControllerApplication
 		# Define tables to deny editing for
 		$deny[$this->settings['database']] = array (
 			'administrators',
+			'countries',
 			'settings',
+			'users',
 		);
 		
 		# Hand off to the default editor, which will echo the HTML
