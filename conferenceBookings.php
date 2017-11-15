@@ -246,7 +246,7 @@ class conferenceBookings extends frontControllerApplication
 			'database' => $this->settings['database'],
 			'table' => $action,
 			'intelligence' => true,
-			'attributes' => $this->formDataBindingAttributes (),
+			'attributes' => $this->formDataBindingAttributes ($action),
 		));
 		$form->setOutputEmail ($this->settings['feedbackRecipient'], $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}");
 		$form->setOutputScreen ();
@@ -265,15 +265,34 @@ class conferenceBookings extends frontControllerApplication
 	
 	
 	# Helper function to define the dataBinding attributes
-	private function formDataBindingAttributes ()
+	private function formDataBindingAttributes ($table)
 	{
-		# Define the properties
+		# Define the properties, by table
 		$dataBindingAttributes = array (
-			'email' => array ('default' => $this->userVisibleIdentifier, ),
+			
+			'conference' => array (
+				'email' => array ('default' => $this->userVisibleIdentifier, ),
+				'participantType' => array ('type' => 'radiobuttons', ),
+				'membership' => array ('type' => 'radiobuttons', ),
+			),
+			
+			'presentations' => array (
+				'type' => array ('type' => 'radiobuttons', ),
+			),
+			
+			'fieldweek' => array (
+				'position' => array ('type' => 'radiobuttons', ),
+				'membership' => array ('type' => 'radiobuttons', ),
+				'dietaryRequirements' => array ('type' => 'radiobuttons', ),
+			),
+			
+			'vendor' => array (
+				
+			),
 		);
 		
 		# Return the properties
-		return $dataBindingAttributes;
+		return $dataBindingAttributes[$table];
 	}
 	
 	
