@@ -1,5 +1,7 @@
 #conferencebookings ul.tabs {clear: right;}
 
+#conferencebookings .ultimateform table td.title {width: 150px;}
+#conferencebookings .ultimateform table h3 {margin-top: 20px; background-color: #eee; padding: 15px 8px;}
 #conferencebookings .ultimateform table tr.dietaryRequirements td {border-bottom: 0;}
 #conferencebookings .ultimateform table tr.dietaryDetails td {border-top: 0;}
 #conferencebookings form tr.dietaryDetails td.title {visibility: hidden;}

@@ -254,7 +254,7 @@ class conferenceBookings extends frontControllerApplication
 			'databaseConnection' => $this->databaseConnection,
 			'unsavedDataProtection' => true,
 			'picker' => true,
-			'cols' => 70,
+			'cols' => 60,
 		));
 		if ($this->settings["{$action}Introduction"]) {
 			$introductionHtml = application::formatTextBlock (application::makeClickableLinks ($this->settings["{$action}Introduction"]));
@@ -302,22 +302,27 @@ class conferenceBookings extends frontControllerApplication
 			'presentations' => array (
 				'type' => array ('type' => 'radiobuttons', ),
 				'session' => array ('type' => 'radiobuttons', 'values' => $this->settings['sessions'], ),
+				'abstract' => array ('description' => 'If you would like to request some special audio or visual aids for this presentation, use this filed to inform us.'),
 			),
 			
 			'fieldweek' => array (
 				'country' => array ('type' => 'select', 'values' => $countries, ),
 				'position' => array ('type' => 'radiobuttons', ),
 				'membership' => array ('type' => 'radiobuttons', ),
-				'project1' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
+				'project1' => array ('type' => 'select', 'values' => $this->settings['projects'], 'heading' => array (3 => 'Project choice'), ),
 				'project2' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
 				'project3' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
 				'project4' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
+				'statement' => array ('heading' => array ('p' => 'Due to limitation of space, only 40 applications will be accepted. To be considered all applications must be accompanied by a brief statement describing how the applicant will use this experience in their future studies. This statement must be no moree than 500 words in length. Of the 40 spaces available, 10 full scholarships will be awarded to successful applicants from developing countries. No other financial assistance will be provided.', )),
 				'project5' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
-				'dietaryRequirements' => array ('type' => 'radiobuttons', ),
+				'dietaryRequirements' => array ('type' => 'radiobuttons', 'heading' => array (3 => 'Personal requirements'), ),
+				'medical' => array ('description' => 'Please use this field to let us know of any physical or medical conditions we should be aware of to improve your participation.', ),
 			),
 			
 			'vendor' => array (
 				'country' => array ('type' => 'select', 'values' => $countries, ),
+				'website' => array ('placeholder' => 'https://...', 'description' => false, ),
+				'description' => array ('heading' => array ('p' => 'In the field below please describe what it is you wish to display, why you think it is appropriate for this conference, and what, if any, special requirements you need to present your materials effectively.'), ),
 			),
 		);
 		
