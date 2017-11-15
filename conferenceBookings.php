@@ -257,7 +257,7 @@ class conferenceBookings extends frontControllerApplication
 			'cols' => 70,
 		));
 		if ($this->settings["{$action}Introduction"]) {
-			$introductionHtml = application::formatTextBlock ($this->settings["{$action}Introduction"]);
+			$introductionHtml = application::formatTextBlock (application::makeClickableLinks ($this->settings["{$action}Introduction"]));
 			$introductionHtml = "\n<div class=\"graybox\">" . $introductionHtml . "\n</div>";
 			$form->heading ('', $introductionHtml);
 		}
