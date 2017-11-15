@@ -132,7 +132,7 @@ class conferenceBookings extends frontControllerApplication
 			  `project4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '4th choice',
 			  `project5` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '5th choice',
 			  `statement` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Applicant statement',
-			  `dietaryRequirements` enum('Vegetarian','Vegan','Gluten-free','Other') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Dietary requirements',
+			  `dietaryRequirements` enum('Vegetarian','Vegan','Gluten-free','Other:') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Dietary requirements',
 			  `dietaryDetails` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Other (dietary request)',
 			  `medical` text COLLATE utf8_unicode_ci COMMENT 'Physical/medical concerns',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
