@@ -19,5 +19,7 @@
 	Use MacroSinenomineEmbeddedWholeDb "$applicationBaseUrl" "/data" "editing"
 	
 	# Application directives
+	RewriteRule ^$applicationBaseUrl/(conference|presentations|fieldweek|vendor)/$ $applicationBaseUrl/index.html?action=$1 [L]
+	RedirectMatch permanent ^$applicationBaseUrl/(conference|presentations|fieldweek|vendor)$ $applicationBaseUrl/$1/
 	
 </Macro>

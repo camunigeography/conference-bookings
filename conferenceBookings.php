@@ -14,7 +14,7 @@ class conferenceBookings extends frontControllerApplication
 			'applicationName' => 'Conference bookings',
 			'div' => strtolower (__CLASS__),
 			'database' => 'conferencebookings',
-			'table' => 'bookings',
+			'table' => 'conference',
 			'databaseStrictWhere' => true,
 			'administrators' => true,
 			'useEditing' => true,
@@ -36,6 +36,30 @@ class conferenceBookings extends frontControllerApplication
 				'url' => '',
 				'tab' => 'Home',
 				'icon' => 'house',
+			),
+			'conference' => array (
+				'description' => 'Conference registration',
+				'url' => 'conference/',
+				'tab' => 'Conference registration',
+				'form' => true,
+			),
+			'presentations' => array (
+				'description' => 'Presentation application',
+				'url' => 'presentations/',
+				'tab' => 'Presentation application',
+				'form' => true,
+			),
+			'fieldweek' => array (
+				'description' => 'Fieldweek registration',
+				'url' => 'fieldweek/',
+				'tab' => 'Fieldweek registration',
+				'form' => true,
+			),
+			'vendor' => array (
+				'description' => 'Vendor registration',
+				'url' => 'vendor/',
+				'tab' => 'Vendor registration',
+				'form' => true,
 			),
 			'edit' => array (
 				'description' => false,
@@ -60,8 +84,70 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
+			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
+			
+			CREATE TABLE `conference` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
+			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
+			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
+			  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address, including postal code',
+			  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Country',
+			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
+			  `participantType` enum('Presenter','Participant (non-student)','Student participant','Vendor representative') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Registering as',
+			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference application';
+			
+			CREATE TABLE `fieldweek` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
+			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
+			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
+			  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address, including postal code',
+			  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Country',
+			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
+			  `position` enum('Academic','Student','Research','Other') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Position',
+			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `project1` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Project - 1st choice',
+			  `project2` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '2nd choice',
+			  `project3` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '3rd choice',
+			  `project4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '4th choice',
+			  `project5` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '5th choice',
+			  `statement` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Applicant statement',
+			  `dietaryRequirements` enum('Vegetarian','Vegan','Gluten-free','Other') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Dietary requirements',
+			  `dietaryDetails` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Other (dietary request)',
+			  `medical` text COLLATE utf8_unicode_ci COMMENT 'Physical/medical concerns',
+			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference application';
+			
+			CREATE TABLE `presentations` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `type` enum('Oral','Poster') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of presentation',
+			  `session` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Session',
+			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
+			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Presenter''s name',
+			  `email` VARCHAR(255) NOT NULL COMMENT 'Presenter\'s e-mail',
+			  `authors` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Author(s), one per line',
+			  `abstract` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Abstract',
+			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Presentations (oral/poster)';
+			
+			CREATE TABLE `vendor` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `company` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Company name',
+			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
+			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
+			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
+			  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address, including postal code',
+			  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Country',
+			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
+			  `website` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Company website',
+			  `description` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Vendor description',
+			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference application';
 		";
 	}
 	
@@ -80,8 +166,102 @@ class conferenceBookings extends frontControllerApplication
 		# Start the HTML
 		$html = "\n<p>Welcome to the conference booking system.</p>";
 		
+		# Create a list of forms
+		$list = array ();
+		foreach ($this->actions as $actionId => $action) {
+			if (isSet ($action['form']) && $action['form']) {
+				$list[$actionId] = "<a href=\"{$this->baseUrl}/{$actionId}/\">" . htmlspecialchars ($action['description']) . '</a>';
+			}
+		}
+		$html .= application::htmlUl ($list, 0, 'boxylist');
+		
 		# Show the HTML
 		echo $html;
+	}
+	
+	
+	# Conference registration
+	public function conference ()
+	{
+		# Delegate to the form
+		echo $html = $this->createForm (__FUNCTION__);
+	}
+	
+	
+	# Presentation application
+	public function presentations ()
+	{
+		# Delegate to the form
+		echo $html = $this->createForm (__FUNCTION__);
+	}
+	
+	
+	# Fieldweek registration
+	public function fieldweek ()
+	{
+		# Delegate to the form
+		echo $html = $this->createForm (__FUNCTION__);
+	}
+	
+	
+	# Vendor registration
+	public function vendor ()
+	{
+		# Delegate to the form
+		echo $html = $this->createForm (__FUNCTION__);
+	}
+	
+	
+	# Form
+	private function createForm ($action)
+	{
+		# Start the HTML
+		$html = '';
+		
+		# Create a new form
+		$form = new form (array (
+			'div' => 'lines form',
+			'displayRestrictions' => false,
+			'nullText' => '',
+			'formCompleteText' => $this->tick . ' Thank you for your submission. We will be in touch in due course.',
+			'autofocus' => true,
+			'databaseConnection' => $this->databaseConnection,
+			'unsavedDataProtection' => true,
+			'picker' => true,
+			'cols' => 70,
+		));
+		$form->dataBinding (array (
+			'database' => $this->settings['database'],
+			'table' => $action,
+			'intelligence' => true,
+			'attributes' => $this->formDataBindingAttributes (),
+		));
+		$form->setOutputEmail ($this->settings['feedbackRecipient'], $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}");
+		$form->setOutputScreen ();
+		if ($result = $form->process ($html)) {
+			
+			# Insert into the database
+			if (!$this->databaseConnection->insert ($this->settings['database'], $action, $result)) {
+				echo "\n<p class=\"warning\">There was a problem inserting the data.</p>";
+				application::dumpData ($this->databaseConnection->error ());
+			}
+		}
+		
+		# Return the HTML
+		return $html;
+	}
+	
+	
+	# Helper function to define the dataBinding attributes
+	private function formDataBindingAttributes ()
+	{
+		# Define the properties
+		$dataBindingAttributes = array (
+			
+		);
+		
+		# Return the properties
+		return $dataBindingAttributes;
 	}
 	
 	
