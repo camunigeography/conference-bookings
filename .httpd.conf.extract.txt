@@ -15,6 +15,11 @@
 	
 	Use MacroFrontControllerApplication "$applicationBaseUrl/" "Conference bookings"
 	
+	# Disable pureContent single signon, to avoid a confusing login box
+	<Location $applicationBaseUrl>
+		UnsetEnv SINGLE_SIGN_ON_ENABLED
+	</Location>
+	
 	# Editing
 	Use MacroSinenomineEmbeddedWholeDb "$applicationBaseUrl" "/data" "editing"
 	

@@ -19,6 +19,8 @@ class conferenceBookings extends frontControllerApplication
 			'administrators' => true,
 			'useEditing' => true,
 			'useSettings' => true,
+			'internalAuth' => true,
+			'authentication' => true,	// All pages require login
 		);
 		
 		# Return the defaults
@@ -87,6 +89,16 @@ class conferenceBookings extends frontControllerApplication
 			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
 			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
+			
+			CREATE TABLE `users` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Your e-mail address' UNIQUE KEY,
+			  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Password',
+			  `validationToken` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Token for validation or password reset',
+			  `lastLoggedInAt` datetime DEFAULT NULL COMMENT 'Last logged in time',
+			  `validatedAt` datetime DEFAULT NULL COMMENT 'Time when validated',
+			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Users';
 			
 			CREATE TABLE `conference` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
@@ -257,7 +269,7 @@ class conferenceBookings extends frontControllerApplication
 	{
 		# Define the properties
 		$dataBindingAttributes = array (
-			
+			'email' => array ('default' => $this->userVisibleIdentifier, ),
 		);
 		
 		# Return the properties
