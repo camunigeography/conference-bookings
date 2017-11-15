@@ -160,6 +160,12 @@ class conferenceBookings extends frontControllerApplication
 			  `description` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Vendor description',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference application';
+			
+			CREATE TABLE `countries` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `abbreviatedName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		";
 	}
 	
@@ -267,11 +273,15 @@ class conferenceBookings extends frontControllerApplication
 	# Helper function to define the dataBinding attributes
 	private function formDataBindingAttributes ($table)
 	{
+		# Get the countries
+		$countries = $this->getCountries ();
+		
 		# Define the properties, by table
 		$dataBindingAttributes = array (
 			
 			'conference' => array (
 				'email' => array ('default' => $this->userVisibleIdentifier, ),
+				'country' => array ('type' => 'select', 'values' => $countries, ),
 				'participantType' => array ('type' => 'radiobuttons', ),
 				'membership' => array ('type' => 'radiobuttons', ),
 			),
@@ -281,13 +291,14 @@ class conferenceBookings extends frontControllerApplication
 			),
 			
 			'fieldweek' => array (
+				'country' => array ('type' => 'select', 'values' => $countries, ),
 				'position' => array ('type' => 'radiobuttons', ),
 				'membership' => array ('type' => 'radiobuttons', ),
 				'dietaryRequirements' => array ('type' => 'radiobuttons', ),
 			),
 			
 			'vendor' => array (
-				
+				'country' => array ('type' => 'select', 'values' => $countries, ),
 			),
 		);
 		
@@ -321,6 +332,28 @@ class conferenceBookings extends frontControllerApplication
 		
 		# Hand off to the default editor, which will echo the HTML
 		parent::editing ($attributes, $deny, $sinenomineExtraSettings);
+	}
+	
+	
+	# Get countries list
+	#!# Should be in ultimateForm or frontControllerApplication natively
+	private function getCountries ($type = false)
+	{
+		# Construct a query
+		$query = "
+			SELECT
+				IF((countries.abbreviatedName = '' OR countries.abbreviatedName IS NULL), LOWER(countries.name), countries.abbreviatedName) as moniker,
+				countries.name
+			FROM countries
+			GROUP BY name
+			ORDER BY " . $this->databaseConnection->trimSql ('countries.name') . "
+		;";
+		
+		# Get the data
+		$data = $this->databaseConnection->getPairs ($query);
+		
+		# Return the data
+		return $data;
 	}
 }
 
