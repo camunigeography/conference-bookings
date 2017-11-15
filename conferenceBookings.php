@@ -52,6 +52,12 @@ class conferenceBookings extends frontControllerApplication
 				'tab' => 'Presentation application',
 				'form' => true,
 			),
+			'posters' => array (
+				'description' => 'Poster application',
+				'url' => 'posters/',
+				'tab' => 'Poster application',
+				'form' => true,
+			),
 			'fieldweek' => array (
 				'description' => 'Fieldweek registration',
 				'url' => 'fieldweek/',
@@ -91,6 +97,7 @@ class conferenceBookings extends frontControllerApplication
 			  `feedbackRecipient` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
 			  `conferenceIntroduction` TEXT COMMENT 'Conference page introduction',
 			  `presentationsIntroduction` TEXT COMMENT 'Presentations page introduction',
+			  `postersIntroduction` TEXT COMMENT 'Posters page introduction',
 			  `fieldweekIntroduction` TEXT COMMENT 'Fieldweek page introduction',
 			  `vendorIntroduction` TEXT COMMENT 'Vendor page introduction',
 			  `sessions` TEXT NOT NULL COMMENT 'Sessions',
@@ -224,6 +231,14 @@ class conferenceBookings extends frontControllerApplication
 	}
 	
 	
+	# Poster application
+	public function posters ()
+	{
+		# Delegate to the form
+		echo $html = $this->createForm (__FUNCTION__, 'presentations');
+	}
+	
+	
 	# Fieldweek registration
 	public function fieldweek ()
 	{
@@ -241,13 +256,19 @@ class conferenceBookings extends frontControllerApplication
 	
 	
 	# Form
-	private function createForm ($action)
+	private function createForm ($action, $forceTable = false)
 	{
 		# Start the HTML
 		$html = '';
 		
+		# Determine the table to use
+		$table = $action;
+		if ($forceTable) {
+			$table = $forceTable;
+		}
+		
 		# Get the dataBinding attributes for each table
-		$dataBindingAttributesByTable = $this->formDataBindingAttributes ($action);
+		$dataBindingAttributesByAction = $this->formDataBindingAttributes ();
 		
 		# Create a new form
 		$form = new form (array (
@@ -270,10 +291,10 @@ class conferenceBookings extends frontControllerApplication
 		}
 		$form->dataBinding (array (
 			'database' => $this->settings['database'],
-			'table' => $action,
+			'table' => $table,
 			'intelligence' => true,
 			'exclude' => array ('status', 'review'),
-			'attributes' => $dataBindingAttributesByTable[$action],
+			'attributes' => $dataBindingAttributesByAction[$action],
 		));
 		
 		# Set output to e-mail, confirmation e-mail, and screen
@@ -285,7 +306,7 @@ class conferenceBookings extends frontControllerApplication
 		if ($result = $form->process ($html)) {
 			
 			# Insert into the database
-			if (!$this->databaseConnection->insert ($this->settings['database'], $action, $result)) {
+			if (!$this->databaseConnection->insert ($this->settings['database'], $table, $result)) {
 				echo "\n<p class=\"warning\">There was a problem inserting the data.</p>";
 				application::dumpData ($this->databaseConnection->error ());
 			}
@@ -313,10 +334,16 @@ class conferenceBookings extends frontControllerApplication
 			),
 			
 			'presentations' => array (
-				'type' => array ('type' => 'radiobuttons', ),
+				'type' => array ('type' => 'radiobuttons', 'default' => 'Oral', 'editable' => false, ),
 				'session' => array ('type' => 'radiobuttons', 'values' => $this->settings['sessions'], ),
 				'email' => array ('default' => $this->userVisibleIdentifier, 'editable' => false, ),
 				'abstract' => array ('description' => 'If you would like to request some special audio or visual aids for this presentation, use this filed to inform us.'),
+			),
+			
+			'posters' => array (
+				'type' => array ('type' => 'radiobuttons', 'default' => 'Poster', 'editable' => false, ),
+				'session' => array ('type' => 'radiobuttons', 'values' => $this->settings['sessions'], ),
+				'email' => array ('default' => $this->userVisibleIdentifier, 'editable' => false, ),
 			),
 			
 			'fieldweek' => array (
