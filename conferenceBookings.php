@@ -302,11 +302,13 @@ class conferenceBookings extends frontControllerApplication
 			'presentations' => array (
 				'type' => array ('type' => 'radiobuttons', ),
 				'session' => array ('type' => 'radiobuttons', 'values' => $this->settings['sessions'], ),
+				'email' => array ('default' => $this->userVisibleIdentifier, ),
 				'abstract' => array ('description' => 'If you would like to request some special audio or visual aids for this presentation, use this filed to inform us.'),
 			),
 			
 			'fieldweek' => array (
 				'country' => array ('type' => 'select', 'values' => $countries, ),
+				'email' => array ('default' => $this->userVisibleIdentifier, ),
 				'position' => array ('type' => 'radiobuttons', ),
 				'membership' => array ('type' => 'radiobuttons', ),
 				'project1' => array ('type' => 'select', 'values' => $this->settings['projects'], 'heading' => array (3 => 'Project choice'), ),
@@ -321,6 +323,7 @@ class conferenceBookings extends frontControllerApplication
 			
 			'vendor' => array (
 				'country' => array ('type' => 'select', 'values' => $countries, ),
+				'email' => array ('default' => $this->userVisibleIdentifier, ),
 				'website' => array ('placeholder' => 'https://...', 'description' => false, ),
 				'description' => array ('heading' => array ('p' => 'In the field below please describe what it is you wish to display, why you think it is appropriate for this conference, and what, if any, special requirements you need to present your materials effectively.'), ),
 			),
