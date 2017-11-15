@@ -18,6 +18,7 @@ class conferenceBookings extends frontControllerApplication
 			'databaseStrictWhere' => true,
 			'administrators' => true,
 			'useEditing' => true,
+			'useSettings' => true,
 		);
 		
 		# Return the defaults
@@ -57,6 +58,10 @@ class conferenceBookings extends frontControllerApplication
 			  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Username' PRIMARY KEY,
 			  `active` enum('','Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='System administrators';
+			
+			CREATE TABLE `settings` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
 		";
 	}
 	
