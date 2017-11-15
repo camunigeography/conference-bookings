@@ -260,6 +260,8 @@ class conferenceBookings extends frontControllerApplication
 			'unsavedDataProtection' => true,
 			'picker' => true,
 			'cols' => 60,
+			'ip' => false,
+			'user' => $this->userVisibleIdentifier,
 		));
 		if ($this->settings["{$action}Introduction"]) {
 			$introductionHtml = application::formatTextBlock (application::makeClickableLinks ($this->settings["{$action}Introduction"]));
@@ -273,8 +275,13 @@ class conferenceBookings extends frontControllerApplication
 			'exclude' => ($this->userIsAdministrator ? array () : array ('status', 'review')),
 			'attributes' => $dataBindingAttributesByTable[$action],
 		));
+		
+		# Set output to e-mail, confirmation e-mail, and screen
 		$form->setOutputEmail ($this->settings['feedbackRecipient'], $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}");
+		$form->setOutputConfirmationEmail ('email', $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}", $includeAbuseNotice = false);
 		$form->setOutputScreen ();
+		
+		# Process the form
 		if ($result = $form->process ($html)) {
 			
 			# Insert into the database
