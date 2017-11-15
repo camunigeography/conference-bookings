@@ -21,6 +21,7 @@ class conferenceBookings extends frontControllerApplication
 			'useSettings' => true,
 			'internalAuth' => true,
 			'authentication' => true,	// All pages require login
+			'settingsTableExplodeTextarea' => true,
 		);
 		
 		# Return the defaults
@@ -87,7 +88,8 @@ class conferenceBookings extends frontControllerApplication
 			
 			CREATE TABLE `settings` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
-			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail'
+			  `recipientEmail` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
+			  `sessions` TEXT NOT NULL COMMENT 'Sessions'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `users` (
@@ -288,6 +290,7 @@ class conferenceBookings extends frontControllerApplication
 			
 			'presentations' => array (
 				'type' => array ('type' => 'radiobuttons', ),
+				'session' => array ('type' => 'radiobuttons', 'values' => $this->settings['sessions'], ),
 			),
 			
 			'fieldweek' => array (
