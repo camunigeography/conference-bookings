@@ -88,12 +88,12 @@ class conferenceBookings extends frontControllerApplication
 	{
 		return "
 			CREATE TABLE `administrators` (
-			  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Username' PRIMARY KEY,
+			  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL PRIMARY KEY COMMENT 'Username',
 			  `active` enum('','Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key (ignored)',
 			  `feedbackRecipient` VARCHAR(255) NOT NULL COMMENT 'Recipient e-mail',
 			  `conferenceIntroduction` TEXT COMMENT 'Conference page introduction',
 			  `presentationsIntroduction` TEXT COMMENT 'Presentations page introduction',
@@ -105,7 +105,7 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `users` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
 			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Your e-mail address' UNIQUE KEY,
 			  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Password',
 			  `validationToken` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Token for validation or password reset',
@@ -115,7 +115,7 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Users';
 			
 			CREATE TABLE `conference` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
 			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
 			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
 			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
@@ -128,7 +128,7 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `fieldweek` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
 			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
 			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
 			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
@@ -150,7 +150,7 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `presentations` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
 			  `type` enum('Oral','Poster') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of presentation',
 			  `session` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Session',
 			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
@@ -164,7 +164,7 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Presentation (oral/poster) applications';
 			
 			CREATE TABLE `vendor` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
 			  `company` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Company name',
 			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
 			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
@@ -178,7 +178,7 @@ class conferenceBookings extends frontControllerApplication
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `countries` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Automatic key' PRIMARY KEY,
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
 			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  `abbreviatedName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
