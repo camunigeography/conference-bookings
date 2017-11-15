@@ -151,6 +151,8 @@ class conferenceBookings extends frontControllerApplication
 			  `email` VARCHAR(255) NOT NULL COMMENT 'Presenter\'s e-mail',
 			  `authors` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Author(s), one per line',
 			  `abstract` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Abstract',
+			  `status` ENUM('Submitted','In review','Accepted','Rejected') NOT NULL DEFAULT 'Submitted' COMMENT 'Status',
+			  `review` TEXT NULL COMMENT 'Reviewer comments',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Presentation (oral/poster) applications';
 			
@@ -268,6 +270,7 @@ class conferenceBookings extends frontControllerApplication
 			'database' => $this->settings['database'],
 			'table' => $action,
 			'intelligence' => true,
+			'exclude' => ($this->userIsAdministrator ? array () : array ('status', 'review')),
 			'attributes' => $dataBindingAttributesByTable[$action],
 		));
 		$form->setOutputEmail ($this->settings['feedbackRecipient'], $this->settings['administratorEmail'], "{$this->settings['applicationName']}: {$this->actions[$action]['description']}");
