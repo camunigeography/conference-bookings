@@ -1,4 +1,5 @@
 #conferencebookings ul.tabs {clear: right;}
 
-#conferencebookings .lines form tr.dietaryRequirements td {border-bottom-width: 0;}
+#conferencebookings .ultimateform table tr.dietaryRequirements td {border-bottom: 0;}
+#conferencebookings .ultimateform table tr.dietaryDetails td {border-top: 0;}
 #conferencebookings form tr.dietaryDetails td.title {visibility: hidden;}

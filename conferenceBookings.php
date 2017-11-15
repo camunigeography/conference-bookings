@@ -241,7 +241,7 @@ class conferenceBookings extends frontControllerApplication
 		
 		# Create a new form
 		$form = new form (array (
-			'div' => 'lines form',
+			'div' => 'ultimateform horizontalonly',
 			'displayRestrictions' => false,
 			'nullText' => '',
 			'formCompleteText' => $this->tick . ' Thank you for your submission. We will be in touch in due course.',
