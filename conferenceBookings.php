@@ -272,7 +272,7 @@ class conferenceBookings extends frontControllerApplication
 			'database' => $this->settings['database'],
 			'table' => $action,
 			'intelligence' => true,
-			'exclude' => ($this->userIsAdministrator ? array () : array ('status', 'review')),
+			'exclude' => array ('status', 'review'),
 			'attributes' => $dataBindingAttributesByTable[$action],
 		));
 		
