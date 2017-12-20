@@ -22,6 +22,7 @@ class conferenceBookings extends frontControllerApplication
 			'internalAuth' => true,
 			'authentication' => true,	// All pages require login
 			'settingsTableExplodeTextarea' => array ('sessions', 'projects'),
+			'useCamUniLookup' => false,
 		);
 		
 		# Return the defaults
