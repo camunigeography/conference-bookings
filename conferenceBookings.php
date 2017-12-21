@@ -414,7 +414,7 @@ class conferenceBookings extends frontControllerApplication
 				'project2' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
 				'project3' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
 				'project4' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
-				'statement' => array ('heading' => array ('p' => 'Due to limitation of space, only 40 applications will be accepted. To be considered all applications must be accompanied by a brief statement describing how the applicant will use this experience in their future studies. This statement must be no moree than 500 words in length. Of the 40 spaces available, 10 full scholarships will be awarded to successful applicants from developing countries. No other financial assistance will be provided.', )),
+				'statement' => array ('heading' => array ('p' => 'Due to limitation of space, only 40 applications will be accepted. To be considered all applications must be accompanied by a brief statement describing how the applicant will use this experience in their future studies. This statement must be no more than 500 words in length. Of the 40 spaces available, 10 full scholarships will be awarded to successful applicants from developing countries. No other financial assistance will be provided.', )),
 				'project5' => array ('type' => 'select', 'values' => $this->settings['projects'], ),
 				'dietaryRequirements' => array ('type' => 'radiobuttons', 'heading' => array (3 => 'Personal requirements'), ),
 				'medical' => array ('description' => 'Please use this field to let us know of any physical or medical conditions we should be aware of to improve your participation.', ),
