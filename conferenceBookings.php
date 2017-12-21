@@ -182,12 +182,6 @@ class conferenceBookings extends frontControllerApplication
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
-			
-			CREATE TABLE `countries` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  `abbreviatedName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		";
 	}
 	
@@ -380,7 +374,7 @@ class conferenceBookings extends frontControllerApplication
 	private function formDataBindingAttributes ()
 	{
 		# Get the countries
-		$countries = $this->getCountries ();
+		$countries = form::getCountries ();
 		
 		# Define the properties, by table
 		$dataBindingAttributes = array (
@@ -458,35 +452,12 @@ class conferenceBookings extends frontControllerApplication
 		# Define tables to deny editing for
 		$deny[$this->settings['database']] = array (
 			'administrators',
-			'countries',
 			'settings',
 			'users',
 		);
 		
 		# Hand off to the default editor, which will echo the HTML
 		parent::editing ($attributes, $deny, $sinenomineExtraSettings);
-	}
-	
-	
-	# Get countries list
-	#!# Should be in ultimateForm or frontControllerApplication natively
-	private function getCountries ($type = false)
-	{
-		# Construct a query
-		$query = "
-			SELECT
-				IF((countries.abbreviatedName = '' OR countries.abbreviatedName IS NULL), LOWER(countries.name), countries.abbreviatedName) as moniker,
-				countries.name
-			FROM countries
-			GROUP BY name
-			ORDER BY " . $this->databaseConnection->trimSql ('countries.name') . "
-		;";
-		
-		# Get the data
-		$data = $this->databaseConnection->getPairs ($query);
-		
-		# Return the data
-		return $data;
 	}
 }
 
