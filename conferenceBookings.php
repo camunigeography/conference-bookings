@@ -270,11 +270,11 @@ class conferenceBookings extends frontControllerApplication
 		}
 		
 		# Show the user's submission if they have already made one
-		if ($submission = $this->getSubmissionOfUser ($this->user, $table, $action, $headings /* returned by reference */)) {
+		if ($submission = $this->getDisplayableSubmissionOfUser ($this->user, $table, $action, $headings /* returned by reference */)) {
 			
 			# Show the submission
 			$html  = "\n<p>You have submitted the following details:</p>";
-			$html .= application::htmlTableKeyed ($submission, $headings);
+			$html .= application::htmlTableKeyed ($submission, $headings, true, 'lines', false, true, $addRowKeyClasses = true);
 			$html .= "\n<p class=\"comment\">Please contact us via the <a href=\"{$this->baseUrl}/feedback.html\">feedback page</a> if any of these details are incorrect.</p>";
 			
 			# Return the HTML
@@ -339,8 +339,8 @@ class conferenceBookings extends frontControllerApplication
 	}
 	
 	
-	# Function to get the submission of a user
-	private function getSubmissionOfUser ($userId, $table, $action, &$headings = array ())
+	# Function to get the submission of a user for display to the user
+	private function getDisplayableSubmissionOfUser ($userId, $table, $action, &$headings = array ())
 	{
 		# Set constraints
 		$constraints = array ('userId' => $this->user);
@@ -358,7 +358,9 @@ class conferenceBookings extends frontControllerApplication
 		$data = $this->databaseConnection->selectOne ($this->settings['database'], $table, $constraints);
 		
 		# Exclude internal fields
-		foreach ($this->internalFields as $field) {
+		$visiblePrivateFields = array ('status');	// Allow status
+		$internalFields = array_diff ($this->internalFields, $visiblePrivateFields);
+		foreach ($internalFields as $field) {
 			unset ($data[$field]);
 		}
 		

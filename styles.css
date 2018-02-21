@@ -5,3 +5,5 @@
 #conferencebookings .ultimateform table tr.dietaryRequirements td {border-bottom: 0;}
 #conferencebookings .ultimateform table tr.dietaryDetails td {border-top: 0;}
 #conferencebookings form tr.dietaryDetails td.title {visibility: hidden;}
+#conferencebookings table tr.status td.value {font-weight: bold;}
+
