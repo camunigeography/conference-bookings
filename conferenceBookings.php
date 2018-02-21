@@ -102,7 +102,8 @@ class conferenceBookings extends frontControllerApplication
 			  `fieldweekIntroduction` TEXT COMMENT 'Fieldweek page introduction',
 			  `vendorIntroduction` TEXT COMMENT 'Vendor page introduction',
 			  `sessions` TEXT NOT NULL COMMENT 'Sessions',
-			  `projects` TEXT NOT NULL COMMENT 'Projects'
+			  `projects` TEXT NOT NULL COMMENT 'Projects',
+			  `conferenceConfirmationMailIntroduction` TEXT NULL COMMENT 'Introduction text for conference e-mail'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `users` (
@@ -269,6 +270,14 @@ class conferenceBookings extends frontControllerApplication
 			$table = $forceTable;
 		}
 		
+		# Determine any prefix to the e-mail
+		$confirmationEmailIntroductoryText = false;
+		if ($action == 'conference') {
+			if ($this->settings['conferenceConfirmationMailIntroduction']) {
+				$confirmationEmailIntroductoryText = $this->settings['conferenceConfirmationMailIntroduction'];
+			}
+		}
+		
 		# Show the user's submission if they have already made one
 		if ($submission = $this->getDisplayableSubmissionOfUser ($this->user, $table, $action, $headings /* returned by reference */)) {
 			
@@ -297,6 +306,7 @@ class conferenceBookings extends frontControllerApplication
 			'cols' => 60,
 			'ip' => false,
 			'user' => $this->userVisibleIdentifier,
+			'confirmationEmailIntroductoryText' => $confirmationEmailIntroductoryText,
 		));
 		if ($this->settings["{$action}Introduction"]) {
 			$introductionHtml = application::formatTextBlock (application::makeClickableLinks ($this->settings["{$action}Introduction"]));
