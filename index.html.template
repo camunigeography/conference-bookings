@@ -9,6 +9,6 @@ $settings = array (
 
 # Load and run the conference bookings class
 require_once ('conference-bookings/conferenceBookings.php');
-new conferenceBookings.php ($settings);
+new conferenceBookings ($settings);
 
 ?>
