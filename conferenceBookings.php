@@ -89,9 +89,9 @@ class conferenceBookings extends frontControllerApplication
 	{
 		return "
 			CREATE TABLE `administrators` (
-			  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL PRIMARY KEY COMMENT 'Username',
-			  `active` enum('','Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='System administrators';
+			  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL PRIMARY KEY COMMENT 'Username',
+			  `active` enum('','Yes','No') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key (ignored)',
@@ -104,85 +104,85 @@ class conferenceBookings extends frontControllerApplication
 			  `sessions` TEXT NOT NULL COMMENT 'Sessions',
 			  `projects` TEXT NOT NULL COMMENT 'Projects',
 			  `conferenceConfirmationMailIntroduction` TEXT NULL COMMENT 'Introduction text for conference e-mail'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `users` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
-			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Your e-mail address' UNIQUE KEY,
-			  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Password',
-			  `validationToken` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Token for validation or password reset',
+			  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Your e-mail address' UNIQUE KEY,
+			  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Password',
+			  `validationToken` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Token for validation or password reset',
 			  `lastLoggedInAt` datetime DEFAULT NULL COMMENT 'Last logged in time',
 			  `validatedAt` datetime DEFAULT NULL COMMENT 'Time when validated',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Users';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Users';
 			
 			CREATE TABLE `conference` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
-			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
-			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
-			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
-			  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address, including postal code',
-			  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Country',
-			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
-			  `participantType` enum('Presenter','Participant (non-student)','Student participant','Vendor representative') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Registering as',
-			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title',
+			  `forename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Forename',
+			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Surname',
+			  `address` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Address, including postal code',
+			  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Country',
+			  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'E-mail',
+			  `participantType` enum('Presenter','Participant (non-student)','Student participant','Vendor representative') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Registering as',
+			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Professional membership',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `fieldweek` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
-			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
-			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
-			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
-			  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address, including postal code',
-			  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Country',
-			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
-			  `position` enum('Academic','Student','Research','Other') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Position',
-			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Professional membership',
-			  `project1` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Project - 1st choice',
-			  `project2` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '2nd choice',
-			  `project3` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '3rd choice',
-			  `project4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '4th choice',
-			  `project5` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '5th choice',
-			  `statement` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Applicant statement',
-			  `dietaryRequirements` enum('No particular requirements','Vegetarian','Vegan','Gluten-free','Other:') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Dietary requirements',
-			  `dietaryDetails` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Other (dietary request)',
-			  `medical` text COLLATE utf8_unicode_ci COMMENT 'Physical/medical concerns',
+			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title',
+			  `forename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Forename',
+			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Surname',
+			  `address` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Address, including postal code',
+			  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Country',
+			  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'E-mail',
+			  `position` enum('Academic','Student','Research','Other') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Position',
+			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `project1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Project - 1st choice',
+			  `project2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '2nd choice',
+			  `project3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '3rd choice',
+			  `project4` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '4th choice',
+			  `project5` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '5th choice',
+			  `statement` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Applicant statement',
+			  `dietaryRequirements` enum('No particular requirements','Vegetarian','Vegan','Gluten-free','Other:') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Dietary requirements',
+			  `dietaryDetails` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Other (dietary request)',
+			  `medical` text COLLATE utf8mb4_unicode_ci COMMENT 'Physical/medical concerns',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `presentations` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
-			  `type` enum('Oral','Poster') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of presentation',
-			  `session` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Session',
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Presenter''s name',
+			  `type` enum('Oral','Poster') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Type of presentation',
+			  `session` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Session',
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title',
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Presenter''s name',
 			  `email` VARCHAR(255) NOT NULL COMMENT 'Presenter\'s e-mail',
-			  `authors` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Author(s), one per line',
-			  `abstract` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Abstract',
+			  `authors` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Author(s), one per line',
+			  `abstract` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Abstract',
 			  `status` ENUM('Submitted','In review','Accepted','Rejected') NOT NULL DEFAULT 'Submitted' COMMENT 'Status',
 			  `review` TEXT NULL COMMENT 'Reviewer comments',
 			  `userId` INT(11) NOT NULL COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp',
 			  UNIQUE `typeUserId` (`type`, `userId`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Presentation (oral/poster) applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Presentation (oral/poster) applications';
 			
 			CREATE TABLE `vendor` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
-			  `company` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Company name',
-			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title',
-			  `forename` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Forename',
-			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Surname',
-			  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address, including postal code',
-			  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Country',
-			  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
-			  `website` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Company website',
-			  `description` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Vendor description',
+			  `company` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Company name',
+			  `title` enum('Dr','Mr','Ms','Miss','Mrs','Mx','Prof','Sir') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title',
+			  `forename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Forename',
+			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Surname',
+			  `address` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Address, including postal code',
+			  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Country',
+			  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'E-mail',
+			  `website` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Company website',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Vendor description',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Conference applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
 		";
 	}
 	
