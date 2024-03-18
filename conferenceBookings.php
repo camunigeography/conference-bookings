@@ -88,7 +88,7 @@ class conferenceBookings extends frontControllerApplication
 			CREATE TABLE `administrators` (
 			  `username` varchar(255 NOT NULL PRIMARY KEY COMMENT 'Username',
 			  `active` enum('','Yes','No' NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='System administrators';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key (ignored)',
@@ -101,7 +101,7 @@ class conferenceBookings extends frontControllerApplication
 			  `sessions` TEXT NOT NULL COMMENT 'Sessions',
 			  `projects` TEXT NOT NULL COMMENT 'Projects',
 			  `conferenceConfirmationMailIntroduction` TEXT NULL COMMENT 'Introduction text for conference e-mail'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Settings';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Settings';
 			
 			CREATE TABLE `users` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
@@ -111,7 +111,7 @@ class conferenceBookings extends frontControllerApplication
 			  `lastLoggedInAt` datetime DEFAULT NULL COMMENT 'Last logged in time',
 			  `validatedAt` datetime DEFAULT NULL COMMENT 'Time when validated',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Users';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Users';
 			
 			CREATE TABLE `conference` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
@@ -125,7 +125,7 @@ class conferenceBookings extends frontControllerApplication
 			  `membership` enum('Member','None' NOT NULL COMMENT 'Professional membership',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `fieldweek` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
@@ -148,7 +148,7 @@ class conferenceBookings extends frontControllerApplication
 			  `medical` text COMMENT 'Physical/medical concerns',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Conference applications';
 			
 			CREATE TABLE `presentations` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
@@ -164,7 +164,7 @@ class conferenceBookings extends frontControllerApplication
 			  `userId` INT(11) NOT NULL COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp',
 			  UNIQUE `typeUserId` (`type`, `userId`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Presentation (oral/poster) applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Presentation (oral/poster) applications';
 			
 			CREATE TABLE `vendor` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Automatic key',
@@ -179,7 +179,7 @@ class conferenceBookings extends frontControllerApplication
 			  `description` text NOT NULL COMMENT 'Vendor description',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Conference applications';
 		";
 	}
 	
