@@ -4,14 +4,10 @@
 #   
 #   # Conference bookings system
 #   Include /path/to/conference-bookings/.httpd.conf.extract.txt
-#   Use MacroConferenceBookings "/bookings" "/path/to/conference-bookings/:/path/to/php/libraries/"
+#   Use MacroConferenceBookings "/bookings"
 
 
-<Macro MacroConferenceBookings $applicationBaseUrl $includePath>
-	
-	<Location $applicationBaseUrl>
-		php_value include_path "$includePath"
-	</Location>
+<Macro MacroConferenceBookings $applicationBaseUrl>
 	
 	Use MacroFrontControllerApplication "$applicationBaseUrl/" "Conference bookings"
 	

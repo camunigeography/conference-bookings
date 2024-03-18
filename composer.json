@@ -1,0 +1,15 @@
+{
+    "name": "camunigeography/conference-bookings",
+    "description": "Simple conference bookings form system",
+    "type": "project",
+    "license": "GPL-3.0-only",
+    "minimum-stability": "stable",
+    "require": {
+        "libpurecontent/frontcontrollerapplication": "^1.13",
+        "libpurecontent/application": "^1.9",
+        "libpurecontent/ultimateform": "^1.29"
+    },
+    "autoload": {
+        "files": ["conferenceBookings.php"]
+    }
+}

@@ -1,9 +1,6 @@
 <?php
 
 # Class to create a conference bookings system
-
-
-require_once ('frontControllerApplication.php');
 class conferenceBookings extends frontControllerApplication
 {
 	# Function to assign defaults additional to the general application defaults
