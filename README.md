@@ -36,5 +36,5 @@ Martin Lucas-Smith, Department of Geography, University of Cambridge, 2017, 2024
 License
 -------
 
-GPL2.
+GPL3.
 
