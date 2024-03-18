@@ -122,7 +122,7 @@ class conferenceBookings extends frontControllerApplication
 			  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Country',
 			  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'E-mail',
 			  `participantType` enum('Presenter','Participant (non-student)','Student participant','Vendor representative') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Registering as',
-			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `membership` enum('Member','None') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Professional membership',
 			  `userId` INT(11) NOT NULL UNIQUE KEY COMMENT 'User ID',
 			  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Conference applications';
@@ -136,7 +136,7 @@ class conferenceBookings extends frontControllerApplication
 			  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Country',
 			  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'E-mail',
 			  `position` enum('Academic','Student','Research','Other') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Position',
-			  `membership` enum('Tree-ring Society (TRS)','Association for Tree-ring Research (ATR)','None') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Professional membership',
+			  `membership` enum('Member','None') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Professional membership',
 			  `project1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Project - 1st choice',
 			  `project2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '2nd choice',
 			  `project3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '3rd choice',
